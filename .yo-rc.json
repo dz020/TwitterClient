@@ -1,0 +1,16 @@
+{
+  "generator-m-ionic": {
+    "answers": {
+      "appName": "Twitter Client",
+      "appId": "mway.dzinser.twitterclient",
+      "ionicCss": false,
+      "bowerPackages": [],
+      "platforms": [
+        "ios"
+      ],
+      "plugins": [],
+      "appModule": "twitterClient",
+      "ecosystems": []
+    }
+  }
+}
