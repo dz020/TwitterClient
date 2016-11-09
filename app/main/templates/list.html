@@ -1,0 +1,57 @@
+<ion-view view-title="Tweets">
+
+  <ion-header-bar class="bar-light bar-subheader">
+
+    <label class="item item-input searchbar">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input type="search" placeholder="Search" ng-model="searchTerm" ng-model-options="{debounce: 400}" ng-change="lvwcontroller.getTweets(searchTerm)" >
+    </label>
+
+    <label class="item item-input filterbar">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input type="text" placeholder="Filter" ng-model="filterTerm" ng-change="lvwcontroller.filterTweets(filterTerm)">
+    </label>
+
+</ion-header-bar>
+
+<ion-header-bar class="bar-light sortbar bar-subheader">
+  <span>Sort by: </span>
+  <button class="button button-stable" ng-click="choice = 'user.name'">Authoren Alphabetisch</button>
+  <button class="button button-stable" ng-click="choice = 'user.created_at'">Veröffentlichungsdatum</button>
+</ion-header-bar>
+
+  <ion-content>
+
+  <ion-refresher
+    pulling-text="Pull to refresh..."
+    on-refresh="lvwcontroller.doRefresh()">
+  </ion-refresher>
+
+  <ion-list ng-class="{ 'list-gallery': lvwcontroller.isGallery(), 'list-default': lvwcontroller.isDefault() }">
+    <ion-item ng-repeat="tweet in lvwcontroller.tweets | filter : filterTerm | orderBy : choice" 
+              class="tweet item-remove-animate item-avatar item-icon-right"
+              type="item-text-wrap"  
+              ui-sref="main.listDetail({ tweetID: tweet.id })">
+
+      <div class="tweet-content-preview">
+        <div class="tweet-author">
+          {{ tweet.user.name }} writes:
+        </div>
+        <div class="tweet-text-preview">
+          Hello, {{ tweet.text }}
+        </div>
+      </div>
+      <i class="detail-btn icon ion-chevron-right icon-accessory"></i>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll
+    ng-if="lvwcontroller.hasMoreResults()"
+    immediate-check="false"
+    icon="ion-loading-c"
+    on-infinite="lvwcontroller.loadMoreResults()"
+    distance="1%">
+  </ion-infinite-scroll>
+
+  </ion-content>
+</ion-view>
