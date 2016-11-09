@@ -1,10 +1,10 @@
 'use strict';
-var app = angular.module('main') //eine App == ein Module
+angular.module('main') //eine App == ein Module
 
 
-//console.log("app", app);
+//$log.log("app", app);
 
-.controller('ListViewController', function ($scope, $http, $window, $ionicLoading, TransferDataBetweenControllers) {
+.controller('ListViewController', function ($scope, $http, $window, $ionicLoading, TransferDataBetweenControllers, $log) {
 
 
   var consumerKey = encodeURIComponent('JLecUmd1bXGJbQHhP3W9UD9uN');
@@ -16,34 +16,34 @@ var app = angular.module('main') //eine App == ein Module
 
     var that = this;
 
-	    var tokenCredentials = $window.btoa(consumerKey + ':' + consumerSecret);
-	    console.log('tokenCredentials', tokenCredentials);
+    var tokenCredentials = $window.btoa(consumerKey + ':' + consumerSecret);
+    $log.log('tokenCredentials', tokenCredentials);
 
-    	console.log('that', that);
-	    return $http({
-	      method: 'POST',
-	      url: 'https://api.twitter.com/oauth2/token',
-	      headers: {
-	        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-	        'Authorization': 'Basic ' + tokenCredentials
-	      },
-	      data: 'grant_type=client_credentials'
-	    })
-	    .then(function (result) {
-      if (result.data && result.data.access_token) {
-        $http.defaults.headers.common.Authorization = 'Bearer ' + result.data.access_token;
-      }
-	    })
-	    .catch(function (error) {
-      console.log('error', error);
-	    });
+    $log.log('that', that);
+    return $http({
+      method: 'POST',
+      url: 'https://api.twitter.com/oauth2/token',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        'Authorization': 'Basic ' + tokenCredentials
+      },
+      data: 'grant_type=client_credentials'
+    })
+        .then(function (result) {
+          if (result.data && result.data.access_token) {
+            $http.defaults.headers.common.Authorization = 'Bearer ' + result.data.access_token;
+          }
+        })
+        .catch(function (error) {
+          $log.log('error', error);
+        });
   };
 
   this.getTweets = function (searchTerm) {
     var that = this;
     TransferDataBetweenControllers.data = 'test uebergabe';
-    if (searchTerm == '' || searchTerm == undefined) {
-      console.log('in if');
+    if (searchTerm === '' || searchTerm === undefined) {
+      $log.log('in if');
       searchTerm = 'MiaSanMia';
       return that.getToken().then(function () {
         that.showLoading();
@@ -51,66 +51,66 @@ var app = angular.module('main') //eine App == ein Module
           method: 'GET',
           url: 'https://api.twitter.com/1.1/search/tweets.json?q=' + searchTerm,
         })
-				.then(function (result) {
-  console.log('unfiltered results', result);
-  that.tweets = result.data.statuses;
-  that.loadMoreTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.next_results;
-  that.refreshTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.refresh_url;
-})
-				.finally(function () {
-			      that.hideLoading();
-			    })
-				.catch(function (error) {
-  console.log(error);
-});
+                .then(function (result) {
+                  $log.log('unfiltered results', result);
+                  that.tweets = result.data.statuses;
+                  that.loadMoreTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.next_results;
+                  that.refreshTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.refresh_url;
+                })
+                .finally(function () {
+                  that.hideLoading();
+                })
+                .catch(function (error) {
+                  $log.log(error);
+                });
       });
     }
     else {
-      console.log('in else');
+      $log.log('in else');
       that.searchTerm = searchTerm;
       that.showLoading();
       return $http({
         method: 'GET',
         url: 'https://api.twitter.com/1.1/search/tweets.json?q=' + searchTerm,
       })
-			.then(function (result) {
-  console.log('unfiltered results', result);
-  that.tweets = result.data.statuses;
-  that.loadMoreTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.next_results;
-  that.refreshTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.refresh_url;
-  TransferDataBetweenControllers.data = that.tweets;
-})
-			.finally(function () {
-		      that.hideLoading();
-		    })
-			.catch(function (error) {
-  console.log(error);
-});
+            .then(function (result) {
+              $log.log('unfiltered results', result);
+              that.tweets = result.data.statuses;
+              that.loadMoreTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.next_results;
+              that.refreshTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.refresh_url;
+              TransferDataBetweenControllers.data = that.tweets;
+            })
+            .finally(function () {
+              that.hideLoading();
+            })
+            .catch(function (error) {
+              $log.log(error);
+            });
     }
   };
 
   this.loadMoreResults = function () {
-    	console.log('scroll to moad more');
-    	var that = this;
+    $log.log('scroll to moad more');
+    var that = this;
     that.showLoading();
     return $http({
       method: 'GET',
       url: that.loadMoreTweetsUrl
     })
-		.then(function (result) {
-  console.log('that tweets vor push', that.tweets);
-  that.tweets = that.tweets.concat(result.data.statuses);
-  console.log('tweets nachgeladen total: ', that.tweets);
-  that.loadMoreTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.next_results;
-  that.refreshTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.refresh_url;
-  TransferDataBetweenControllers.data = that.tweets;
-})
-		.finally(function () {
-	      that.hideLoading();
-	    })
-		.catch(function (error) {
-  console.log(error);
-});
+        .then(function (result) {
+          $log.log('that tweets vor push', that.tweets);
+          that.tweets = that.tweets.concat(result.data.statuses);
+          $log.log('tweets nachgeladen total: ', that.tweets);
+          that.loadMoreTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.next_results;
+          that.refreshTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.refresh_url;
+          TransferDataBetweenControllers.data = that.tweets;
+        })
+        .finally(function () {
+          that.hideLoading();
+        })
+        .catch(function (error) {
+          $log.log(error);
+        });
   };
 
   this.doRefresh = function () {
@@ -120,34 +120,34 @@ var app = angular.module('main') //eine App == ein Module
       method: 'GET',
       url: that.refreshTweetsUrl,
     })
-		.then(function (result) {
-  console.log('unfiltered results von refresh_url', result);
-  if (result.data.statuses.length !== 0) {
-    that.tweets = result.data.statuses;
-  }
-  that.refreshTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.refresh_url;
-})
-		.finally(function () {
-	        that.hideLoading();
-})
-		.catch(function (error) {
-  console.log(error);
-});
+        .then(function (result) {
+          $log.log('unfiltered results von refresh_url', result);
+          if (result.data.statuses.length !== 0) {
+            that.tweets = result.data.statuses;
+          }
+          that.refreshTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.refresh_url;
+        })
+        .finally(function () {
+          that.hideLoading();
+        })
+        .catch(function (error) {
+          $log.log(error);
+        });
   };
 
   this.hasMoreResults = function () {
-    	var that = this;
-    	if (that.loadMoreTweetsUrl != '') {
-	    	console.log('more results available');
-	    	return true;
-    	} else {
-	    	console.log('NO MORE RESULTS available');
-    		return false;
-    	}
+    var that = this;
+    if (that.loadMoreTweetsUrl !== '') {
+      $log.log('more results available');
+      return true;
+    } else {
+      $log.log('NO MORE RESULTS available');
+      return false;
+    }
   };
 
   this.showLoading = function () {
-//		console.log("spinner sollte kommen");
+//      $log.log("spinner sollte kommen");
     $ionicLoading.show({
       template: '<p>Loading...</p><ion-spinner></ion-spinner>'
     });

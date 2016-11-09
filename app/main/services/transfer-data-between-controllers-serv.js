@@ -1,8 +1,8 @@
 'use strict';
 angular.module('main')
 
-	.service('TransferDataBetweenControllers', function () {
+    .service('TransferDataBetweenControllers', function () {
 
-  console.log('Hello from your Service: TransferDataBetweenControllers in module main');
+      //console.log('Hello from your Service: TransferDataBetweenControllers in module main');
 
-});
+    });
