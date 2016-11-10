@@ -41,7 +41,6 @@ angular.module('main') //eine App == ein Module
 
   this.getTweets = function (searchTerm) {
     var that = this;
-    TransferDataBetweenControllers.data = 'test uebergabe';
     if (searchTerm === '' || searchTerm === undefined) {
       $log.log('in if');
       searchTerm = 'MiaSanMia';
@@ -56,6 +55,7 @@ angular.module('main') //eine App == ein Module
                   that.tweets = result.data.statuses;
                   that.loadMoreTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.next_results;
                   that.refreshTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.refresh_url;
+                  //TransferDataBetweenControllers.setData(that.tweets);
                 })
                 .finally(function () {
                   that.hideLoading();
@@ -78,7 +78,7 @@ angular.module('main') //eine App == ein Module
               that.tweets = result.data.statuses;
               that.loadMoreTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.next_results;
               that.refreshTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.refresh_url;
-              TransferDataBetweenControllers.data = that.tweets;
+              //TransferDataBetweenControllers.setData(that.tweets);
             })
             .finally(function () {
               that.hideLoading();
@@ -103,7 +103,7 @@ angular.module('main') //eine App == ein Module
           $log.log('tweets nachgeladen total: ', that.tweets);
           that.loadMoreTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.next_results;
           that.refreshTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.refresh_url;
-          TransferDataBetweenControllers.data = that.tweets;
+          //TransferDataBetweenControllers.setData(that.tweets);
         })
         .finally(function () {
           that.hideLoading();
@@ -163,6 +163,11 @@ angular.module('main') //eine App == ein Module
 
   this.isDefault = function () {
     return false;
+  };
+
+  this.shareSelectedData = function (tweet) {
+    $log.log('tweet der gesendet werden soll', tweet);
+    TransferDataBetweenControllers.setTMPData(tweet);
   };
 
 

@@ -15,6 +15,8 @@ $assertive:                       #ef4e3a !default;
 $royal:                           #8a6de9 !default;
 $dark:                            #444 !default;
 
+$bar-subheader-height: 96px !default;
+
 // The path for our ionicons font files, relative to the built & temporary main.css
 $ionicons-font-path: "../assets/fonts" !default;
 
@@ -71,18 +73,6 @@ $ionicons-font-path: "../assets/fonts" !default;
 	width: 100%;
 }
 
-.has-subheader{
-	top: 132px;
-}
-
-.sortbar{
-	top: 88px;
-	span{
-		line-height: 32px;
-		margin: 0px 5px 0px 5px;
-	}
-}
-
 .button{
 	border: 1px solid lightgrey !important;
 }
@@ -113,5 +103,56 @@ $ionicons-font-path: "../assets/fonts" !default;
 	iframe{
 	    width: 100%;
    		 height: 1000px;
+	}
+}
+
+.nothing-hidden{
+	white-space: normal;
+}
+
+.btn-open-in-browser{
+    margin-top: 13px;
+    float: right;
+}
+
+.platform-android{
+	.back-button{
+		display: none !important;
+	}
+}
+
+
+.platform-android .tweet-listview{
+
+	.has-tabs-top{
+
+		.large-inputfields{
+			top: 48px;
+		}
+		.sortbar{
+			top: 88px;
+		}
+	}
+
+	.scroll-content{
+		top: 175px;
+	}
+}
+
+.platform-ios .tweet-listview{
+	.sortbar{
+		top: 48px;
+	}
+
+	.scroll-content{
+		top: 135px;
+	}
+}
+
+.sortbar{
+	display: block;
+	span{
+		line-height: 32px;
+		margin: 0px 5px 0px 5px;
 	}
 }
