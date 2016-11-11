@@ -142,7 +142,7 @@ angular.module('main') //eine App == ein Module
       $log.log('more results available');
       return true;
     } else {
-      $log.log('NO MORE RESULTS available');
+      $log.log('no more results available');
       return false;
     }
   };
