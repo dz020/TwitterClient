@@ -4,13 +4,14 @@ angular.module('main') //eine App == ein Module
 
 //$log.log("app", app);
 
-.controller('ListViewController', function ($scope, $http, $window, $ionicLoading, TransferDataBetweenControllers, $log) {
-
+.controller('ListViewController', function ($scope, $http, $window, $ionicLoading, TransferDataBetweenControllers, $log, $cordovaNetwork) {
 
   var consumerKey = encodeURIComponent('JLecUmd1bXGJbQHhP3W9UD9uN');
   var consumerSecret = encodeURIComponent('ckJUEow7KwpOjv6rQ5wajVcIFq7YI2uTjfr5s138lB091vAfWN');
   this.tweets = '';
   this.displayType = 'list-gallery';
+  this.isGallery = false;
+  this.isList = true;
 
   this.getToken = function () {
 
@@ -157,24 +158,28 @@ angular.module('main') //eine App == ein Module
     $ionicLoading.hide();
   };
 
-  this.isGallery = function () {
-    return true;
-  };
-
-  this.isDefault = function () {
-    return false;
-  };
 
   this.shareSelectedData = function (tweet) {
     $log.log('tweet der gesendet werden soll', tweet);
     TransferDataBetweenControllers.setTMPData(tweet);
   };
 
+  this.setNetworkConnectionListeners = function ($cordovaNetwork) {
+    var that = this;
+    // listen for Online event
+    that.$on('$cordovaNetwork:online', function () {
+      alert('wir sind online');
+    });
+
+    // listen for Offline event
+    that.$on('$cordovaNetwork:offline', function () {
+      alert('wir sind offline');
+    });
+  };
 
 //--------------------------------------------------------------
 
   this.getTweets();
+  this.setNetworkConnectionListeners($cordovaNetwork);
 
 });
-
-

@@ -25,6 +25,7 @@ $ionicons-font-path: "../assets/fonts" !default;
 
 .list{
     flex-wrap: wrap;
+    display: inherit;
 }
 
 .list-gallery{
@@ -155,4 +156,8 @@ $ionicons-font-path: "../assets/fonts" !default;
 		line-height: 32px;
 		margin: 0px 5px 0px 5px;
 	}
+}
+
+.sort-btn{
+	position: static !important;
 }

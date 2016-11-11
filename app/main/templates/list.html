@@ -18,6 +18,12 @@
       <span>Sort by: </span>
       <button class="button button-stable" ng-click="choice = 'user.name'">Author</button>
       <button class="button button-stable" ng-click="choice = 'user.created_at'">Day</button>
+      <button class="button button-stable" ng-click="lvwcontroller.isGallery = false; lvwcontroller.isList = true">
+        <i class="icon ion-ios-list icon-accessory"></i>
+      </button>
+      <button class="button button-stable sort-btn" ng-click="lvwcontroller.isGallery = true; lvwcontroller.isList = false">
+        <i class="icon ion-ios-keypad icon-accessory"></i>
+      </button>
     </div>
 
 </ion-header-bar>
@@ -29,7 +35,7 @@
     on-refresh="lvwcontroller.doRefresh()">
   </ion-refresher>
 
-  <ion-list ng-class="{ 'list-gallery': lvwcontroller.isGallery(), 'list-default': lvwcontroller.isDefault() }">
+  <ion-list ng-class="{ 'list-gallery': lvwcontroller.isGallery, 'list-default': lvwcontroller.isList }">
     <ion-item ng-repeat="tweet in lvwcontroller.tweets | filter : filterTerm | orderBy : choice" 
               class="tweet item-remove-animate item-avatar item-icon-right"
               type="item-text-wrap"  

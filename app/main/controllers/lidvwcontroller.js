@@ -50,6 +50,8 @@ angular.module('main') //eine App == ein Module
           refresh: true
         }
       });
+    } else {
+      window.open(that.url, '_blank');
     }
   };
 
