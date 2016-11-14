@@ -9,9 +9,9 @@ angular.module('main', [
 
   // ROUTING with ui.router
 
-  console.log("window size", document.documentElement.clientWidth);
+  //$log.log('window size', document.documentElement.clientWidth);
 
-  if(document.documentElement.clientWidth > 360){
+  if (document.documentElement.clientWidth > 360) {
     //alert("splitscreen laden");
   }
 

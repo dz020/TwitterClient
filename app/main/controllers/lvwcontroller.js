@@ -4,7 +4,7 @@ angular.module('main') //eine App == ein Module
 
 //$log.log("app", app);
 
-.controller('ListViewController', function ($scope, $http, $window, $ionicLoading, TransferDataBetweenControllers, $log, $cordovaNetwork) {
+.controller('ListViewController', function ($scope, $http, $window, $ionicLoading, TransferDataBetweenControllers, $log) {
 
   var consumerKey = encodeURIComponent('JLecUmd1bXGJbQHhP3W9UD9uN');
   var consumerSecret = encodeURIComponent('ckJUEow7KwpOjv6rQ5wajVcIFq7YI2uTjfr5s138lB091vAfWN');
@@ -12,8 +12,6 @@ angular.module('main') //eine App == ein Module
   this.displayType = 'list-gallery';
   this.isGallery = false;
   this.isList = true;
-
-  $log.log('online', $cordovaNetwork);
 
   this.getToken = function () {
 
@@ -163,14 +161,8 @@ angular.module('main') //eine App == ein Module
     TransferDataBetweenControllers.setTMPData(tweet);
   };
 
-  this.setNetworkConnectionListeners = function ($cordovaNetwork) {
-    var that = this;
-    // listen for Online event
-  };
-
 //--------------------------------------------------------------
 
   this.getTweets();
-  this.setNetworkConnectionListeners($cordovaNetwork);
 
 });
