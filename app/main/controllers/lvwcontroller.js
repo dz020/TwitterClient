@@ -13,6 +13,8 @@ angular.module('main') //eine App == ein Module
   this.isGallery = false;
   this.isList = true;
 
+  $log.log('online', $cordovaNetwork);
+
   this.getToken = function () {
 
     var that = this;
@@ -43,7 +45,7 @@ angular.module('main') //eine App == ein Module
   this.getTweets = function (searchTerm) {
     var that = this;
     if (searchTerm === '' || searchTerm === undefined) {
-      $log.log('in if');
+      $log.log('no searchTerm defined');
       searchTerm = 'MiaSanMia';
       return that.getToken().then(function () {
         that.showLoading();
@@ -56,7 +58,6 @@ angular.module('main') //eine App == ein Module
                   that.tweets = result.data.statuses;
                   that.loadMoreTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.next_results;
                   that.refreshTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.refresh_url;
-                  //TransferDataBetweenControllers.setData(that.tweets);
                 })
                 .finally(function () {
                   that.hideLoading();
@@ -79,7 +80,6 @@ angular.module('main') //eine App == ein Module
               that.tweets = result.data.statuses;
               that.loadMoreTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.next_results;
               that.refreshTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.refresh_url;
-              //TransferDataBetweenControllers.setData(that.tweets);
             })
             .finally(function () {
               that.hideLoading();
@@ -104,10 +104,10 @@ angular.module('main') //eine App == ein Module
           $log.log('tweets nachgeladen total: ', that.tweets);
           that.loadMoreTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.next_results;
           that.refreshTweetsUrl = 'https://api.twitter.com/1.1/search/tweets.json' + result.data.search_metadata.refresh_url;
-          //TransferDataBetweenControllers.setData(that.tweets);
         })
         .finally(function () {
           that.hideLoading();
+          $scope.$broadcast('scroll.infiniteScrollComplete');
         })
         .catch(function (error) {
           $log.log(error);
@@ -148,7 +148,6 @@ angular.module('main') //eine App == ein Module
   };
 
   this.showLoading = function () {
-//      $log.log("spinner sollte kommen");
     $ionicLoading.show({
       template: '<p>Loading...</p><ion-spinner></ion-spinner>'
     });
@@ -167,14 +166,6 @@ angular.module('main') //eine App == ein Module
   this.setNetworkConnectionListeners = function ($cordovaNetwork) {
     var that = this;
     // listen for Online event
-    that.$on('$cordovaNetwork:online', function () {
-      alert('wir sind online');
-    });
-
-    // listen for Offline event
-    that.$on('$cordovaNetwork:offline', function () {
-      alert('wir sind offline');
-    });
   };
 
 //--------------------------------------------------------------

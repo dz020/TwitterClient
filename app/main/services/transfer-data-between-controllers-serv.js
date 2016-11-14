@@ -7,7 +7,6 @@ angular.module('main')
     this.TMPData = '';
     var that = this;
 
-    //console.log('Hello from your Service: TransferDataBetweenControllers in module main');
     this.getData = function () {
       $log.log('get data service was callled');
       return that.data;

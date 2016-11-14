@@ -8,7 +8,14 @@ angular.module('main', [
 .config(function ($stateProvider, $urlRouterProvider) {
 
   // ROUTING with ui.router
-  $urlRouterProvider.otherwise('/main/list');
+
+  console.log("window size", document.documentElement.clientWidth);
+
+  if(document.documentElement.clientWidth > 360){
+    //alert("splitscreen laden");
+  }
+
+  $urlRouterProvider.otherwise('/main/list'); //gibt an welche seite als default geladen wird wenn man localhost aufruft
   $stateProvider
     // this state is placed in the <ion-nav-view> in the index.html
     .state('main', {
