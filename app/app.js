@@ -1,12 +1,21 @@
 'use strict';
 angular.module('twitterClient', [
-  // load your modules here
-  'main', // starting with the main module
+  'main',
+  'pascalprecht.translate'
 ])
 
-.run(function ($ionicPlatform, $cordovaNetwork, $log) {
+.config(function ($translateProvider) {
+  $translateProvider.useSanitizeValueStrategy(null);
+  $translateProvider.useStaticFilesLoader({
+    prefix: 'main/assets/i18n/',
+    suffix: '.json'
+  });
+  $translateProvider.preferredLanguage('en');
+})
+
+.run(function ($ionicPlatform, $cordovaNetwork, $log, $ionicPopup, TransferDataBetweenControllers) {
   $ionicPlatform.ready(function () {
-    $log.log('zeig mir navigator', $cordovaNetwork.isOffline());
+    TransferDataBetweenControllers.setNetworkStatus($cordovaNetwork.isOffline());
   });
 
 });

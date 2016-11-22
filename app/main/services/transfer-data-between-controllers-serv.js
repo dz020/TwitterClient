@@ -4,8 +4,9 @@ angular.module('main')
   .service('TransferDataBetweenControllers', function ($log) {
 
     this.data = '';
-    this.TMPData = '';
+    this.isOffline = 'nix';
     var that = this;
+    this.networkStatus = '';
 
     this.getData = function () {
       $log.log('get data service was callled');
@@ -17,12 +18,13 @@ angular.module('main')
       that.data = data;
     };
 
-    this.setTMPData = function (data) {
-      that.TMPData = data;
-    };
-
-    this.getTMPData = function () {
-      return that.TMPData;
+    this.setNetworkStatus = function (available) {
+      this.networkStatus = available;
+      if ( available ) {
+        $log.log('make api call');
+      } else {
+        $log.log('trigger popup');
+      }
     };
 
   });

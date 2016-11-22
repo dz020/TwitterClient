@@ -70,6 +70,10 @@ $ionicons-font-path: "../assets/fonts" !default;
 	white-space: normal;
 }
 
+.tweet-date{
+  font-size: 11px;
+}
+
 .searchbar{
 	width: 100%;
 }
@@ -94,13 +98,13 @@ $ionicons-font-path: "../assets/fonts" !default;
 
 }
 
-.author_view{
+.about_view{
 	.item{
 		text-align: center;
 	}
 }
 
-.company_view{
+.imprint_view{
 	iframe{
 	    width: 100%;
    		 height: 1000px;
@@ -123,7 +127,7 @@ $ionicons-font-path: "../assets/fonts" !default;
 }
 
 
-.platform-android .tweet-listview{
+.platform-android .list_view{
 
 	.has-tabs-top{
 
@@ -140,7 +144,7 @@ $ionicons-font-path: "../assets/fonts" !default;
 	}
 }
 
-.platform-ios .tweet-listview{
+.platform-ios .list_view{
 	.sortbar{
 		top: 48px;
 	}

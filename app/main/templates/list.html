@@ -1,27 +1,27 @@
-<ion-view view-title="Tweets" class="tweet-listview">
+<ion-view view-title="{{'LISTVIEW.TITLE' | translate}}" class="list_view">
 
   <ion-header-bar class="bar-light bar-subheader">
 
     <div class="large-inputfields bar">
       <label class="item item-input searchbar">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Search" ng-model="searchTerm" ng-model-options="{debounce: 400}" ng-change="lvwcontroller.getTweets(searchTerm)" >
+        <input type="search" placeholder="{{'GENERAL.SEARCH' | translate}}" ng-model="searchTerm" value="{{ listViewCtrl.searchTerm | encodeUri }}" ng-model-options="{debounce: 400}" ng-change="listViewCtrl.getTweets(searchTerm)" >
       </label>
 
       <label class="item item-input filterbar">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="text" placeholder="Filter" ng-model="filterTerm" ng-change="lvwcontroller.filterTweets(filterTerm)">
+        <input type="text" placeholder="{{'GENERAL.FILTER' | translate}}" ng-model="filterTerm" ng-change="listViewCtrl.filterTweets(filterTerm)">
       </label>
     </div>
 
     <div class="sortbar bar">
-      <span>Sort by: </span>
-      <button class="button button-stable" ng-click="choice = 'user.name'">Author</button>
-      <button class="button button-stable" ng-click="choice = 'user.created_at'">Day</button>
-      <button class="button button-stable" ng-click="lvwcontroller.isGallery = false; lvwcontroller.isList = true">
+      <span>{{'GENERAL.SORTBY' | translate }}</span>
+      <button class="button button-stable" ng-click="choice = 'user.name'" ng-class="{active : choice == 'user.name'}">{{'GENERAL.AUTHOR' | translate }}</button>
+      <button class="button button-stable" ng-click="choice = 'user.created_at'" ng-class="{active : choice == 'user.created_at'}">{{'GENERAL.DATE' | translate }}</button>
+      <button class="button button-stable" ng-click="listViewCtrl.isGallery = false; listViewCtrl.isList = true" ng-class="{active : listViewCtrl.isList == true}">
         <i class="icon ion-ios-list icon-accessory"></i>
       </button>
-      <button class="button button-stable sort-btn" ng-click="lvwcontroller.isGallery = true; lvwcontroller.isList = false">
+      <button class="button button-stable sort-btn" ng-click="listViewCtrl.isGallery = true; listViewCtrl.isList = false" ng-class="{active : listViewCtrl.isGallery == true}">
         <i class="icon ion-ios-keypad icon-accessory"></i>
       </button>
     </div>
@@ -32,22 +32,25 @@
 
   <ion-refresher
     pulling-text="Pull to refresh..."
-    on-refresh="lvwcontroller.doRefresh()">
+    on-refresh="listViewCtrl.doRefresh()">
   </ion-refresher>
 
-  <ion-list ng-class="{ 'list-gallery': lvwcontroller.isGallery, 'list-default': lvwcontroller.isList }">
-    <ion-item ng-repeat="tweet in lvwcontroller.tweets | filter : filterTerm | orderBy : choice" 
+  <ion-list ng-class="{ 'list-gallery': listViewCtrl.isGallery, 'list-default': listViewCtrl.isList }">
+    <ion-item ng-repeat="tweet in listViewCtrl.tweets | filter : filterTerm | orderBy : choice"
               class="tweet item-remove-animate item-avatar item-icon-right"
-              type="item-text-wrap"  
-              ng-click="lvwcontroller.shareSelectedData(tweet)"
+              type="item-text-wrap"
+              ng-click="listViewCtrl.shareSelectedData(tweet)"
               ui-sref="main.listDetail">
 
       <div class="tweet-content-preview">
         <div class="tweet-author">
-          {{ tweet.user.name }} writes:
+          {{ tweet.user.name }} {{'LISTVIEW.WRITES' | translate }}
+        </div>
+        <div class="tweet-date">
+          {{ tweet.created_at | date : "short" }}
         </div>
         <div class="tweet-text-preview">
-          Hello, {{ tweet.text }}
+          {{ tweet.text }}
         </div>
       </div>
       <i class="detail-btn icon ion-chevron-right icon-accessory"></i>
@@ -55,20 +58,13 @@
   </ion-list>
 
   <ion-infinite-scroll
-    ng-if="lvwcontroller.hasMoreResults()"
+    ng-if="listViewCtrl.hasMoreResults()"
     immediate-check="false"
     icon="ion-loading-c"
-    on-infinite="lvwcontroller.loadMoreResults()"
+    on-infinite="listViewCtrl.loadMoreResults()"
     distance="1%">
   </ion-infinite-scroll>
 
   </ion-content>
-
-
-  <!--ion-side-menu expose-aside-when="(min-width:360px)">
-    <p>
-    Hallo large screen
-    </p>
-  </ion-side-menu -->
 
 </ion-view>

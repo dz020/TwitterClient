@@ -1,20 +1,18 @@
 <ion-tabs class="tabs-icon-top tabs-assertive">
 
-  <!-- List Tab -->
-  <ion-tab title="Tweets" icon-off="ion-social-twitter-outline" icon-on="ion-social-twitter"
+  <ion-tab title="{{'TABS.TWEETS' | translate}}" icon-off="ion-social-twitter-outline" icon-on="ion-social-twitter"
     ui-sref="main.list">
     <ion-nav-view name="tab-list"></ion-nav-view>
   </ion-tab>
 
-  <!-- Debug Tab -->
-  <ion-tab title="Author" icon-off="ion-ios-person-outline" icon-on="ion-ios-person"
-    ui-sref="main.employee">
-    <ion-nav-view name="tab-employee"></ion-nav-view>
+  <ion-tab title="{{'TABS.ABOUT' | translate}}" icon-off="ion-ios-person-outline" icon-on="ion-ios-person"
+    ui-sref="main.about">
+    <ion-nav-view name="tab-about"></ion-nav-view>
   </ion-tab>
 
-    <ion-tab title="Company" icon-off="ion-ios-information-outline" icon-on="ion-ios-information"
-    ui-sref="main.company">
-    <ion-nav-view name="tab-company"></ion-nav-view>
+    <ion-tab title="{{'TABS.IMPRINT' | translate}}" icon-off="ion-ios-information-outline" icon-on="ion-ios-information"
+    ui-sref="main.imprint">
+    <ion-nav-view name="tab-imprint"></ion-nav-view>
   </ion-tab>
 
 </ion-tabs>

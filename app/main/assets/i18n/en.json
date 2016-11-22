@@ -1,0 +1,33 @@
+{
+  "TABS": {
+    "TWEETS": "Tweets",
+    "ABOUT": "About",
+    "IMPRINT": "Imprint"
+  },
+  "LISTVIEW": {
+    "TITLE": "Tweets",
+    "WRITES": "writes:"
+  },
+  "GENERAL": {
+    "SORTBY": "Sort by",
+    "AUTHOR": "Author",
+    "DATE": "Date",
+    "SEARCH": "Search",
+    "FILTER": "Filter"
+  },
+  "LISTDETAILVIEW": {
+    "TITLE": "Tweet Details",
+    "OPENLINKBTN": "Open Link",
+    "AUTHOR": "Author",
+    "CREATEDDATE": "Created at",
+    "TWEETHEADLINE": "Tweet Message"
+  },
+  "ABOUTVIEW": {
+    "TITLE": "About",
+    "AUTHOR": "Author",
+    "AUTHORNAME": "Dominik Zinser"
+  },
+  "IMPRINTVIEW": {
+    "TITLE": "Imprint"
+  }
+}

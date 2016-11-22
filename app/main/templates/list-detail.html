@@ -1,33 +1,32 @@
-<ion-view view-title="Tweet Details">
-  <!-- do you want padding -->
+<ion-view view-title="{{'LISTDETAILVIEW.TITLE' | translate}}">
+
   <ion-content class="padding">
 
-    <!-- content goes here -->
     <ion-list>
 
       <ion-item class="item item-divider">
-        Author
+        {{'LISTDETAILVIEW.AUTHOR' | translate}}
       </ion-item>
       <ion-item class="item">
-        {{ lidvwcontroller.data.user.name }}
+        {{ listDetailViewCtrl.data.user.name }}
       </ion-item>
 
       <ion-item class="item item-divider">
-        Created at
+        {{'LISTDETAILVIEW.CREATEDDATE' | translate}}
       </ion-item>
       <ion-item class="item">
-        {{ lidvwcontroller.data.created_at }}
-      </ion-item>      
+        {{ listDetailViewCtrl.data.created_at | date : "medium" }}
+      </ion-item>
 
       <ion-item class="item item-divider">
-        Tweet
+        {{'LISTDETAILVIEW.TWEETHEADLINE' | translate}}
       </ion-item>
       <ion-item class="nothing-hidden item">
-        {{ lidvwcontroller.data.text }}
+        {{ listDetailViewCtrl.data.text }}
       </ion-item>
 
-      <button class="btn-open-in-browser button button-stable" ng-show="lidvwcontroller.hasLink" ng-click="lidvwcontroller.openLink()">
-        Open Link
+      <button class="btn-open-in-browser button button-stable" ng-show="listDetailViewCtrl.hasLink" ng-click="listDetailViewCtrl.openLink()">
+        {{'LISTDETAILVIEW.OPENLINKBTN' | translate}}
       </button>
 
     </ion-list>

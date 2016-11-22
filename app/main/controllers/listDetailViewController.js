@@ -1,11 +1,10 @@
 'use strict';
-angular.module('main') //eine App == ein Module
+angular.module('main')
 
 
-.controller('ListItemDetailViewController', function ($scope, $window, TransferDataBetweenControllers, $log) {
-    //$log.log("app data", app.data);
-  this.data = TransferDataBetweenControllers.getTMPData();
-  $log.log('data::::', this, TransferDataBetweenControllers.getTMPData());
+.controller('ListDetailViewController', function ($scope, $window, TransferDataBetweenControllers, $log) {
+  this.data = TransferDataBetweenControllers.getData();
+  $log.log('data::::', this, TransferDataBetweenControllers.getData());
   var that = this;
   this.url = '';
   this.hasLink = false;
@@ -25,10 +24,9 @@ angular.module('main') //eine App == ein Module
     var urlRegex = /(https?:\/\/[^\s]+)/g;
     return text.replace(urlRegex, function (url) {
       that.url = url;
+      that.data.text = that.data.text.replace(url, '');
     });
   };
-
-  this.prepareDataForDisplay();
 
   this.openLink = function () {
 
@@ -54,5 +52,9 @@ angular.module('main') //eine App == ein Module
       window.open(that.url, '_blank');
     }
   };
+
+  //--------------------------------------------------------------
+
+  this.prepareDataForDisplay();
 
 });

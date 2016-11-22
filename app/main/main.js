@@ -3,21 +3,12 @@ angular.module('main', [
   'ionic',
   'ngCordova',
   'ui.router',
-  // TODO: load other modules selected during generation
+  'rt.encodeuri'
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
 
-  // ROUTING with ui.router
-
-  //$log.log('window size', document.documentElement.clientWidth);
-
-  if (document.documentElement.clientWidth > 360) {
-    //alert("splitscreen laden");
-  }
-
-  $urlRouterProvider.otherwise('/main/list'); //gibt an welche seite als default geladen wird wenn man localhost aufruft
+  $urlRouterProvider.otherwise('/main/list');
   $stateProvider
-    // this state is placed in the <ion-nav-view> in the index.html
     .state('main', {
       url: '/main',
       abstract: true,
@@ -28,32 +19,32 @@ angular.module('main', [
         views: {
           'tab-list': {
             templateUrl: 'main/templates/list.html',
-            controller: 'ListViewController as lvwcontroller'
+            controller: 'ListViewController as listViewCtrl'
           }
         }
       })
       .state('main.listDetail', {
-        url: '/list/detail:id',
+        url: '/list/detail',
         views: {
           'tab-list': {
             templateUrl: 'main/templates/list-detail.html',
-            controller: 'ListItemDetailViewController as lidvwcontroller'
+            controller: 'ListDetailViewController as listDetailViewCtrl'
           }
         }
       })
-      .state('main.employee', {
-        url: '/employee',
+      .state('main.about', {
+        url: '/about',
         views: {
-          'tab-employee': {
-            templateUrl: 'main/templates/employee.html'
+          'tab-about': {
+            templateUrl: 'main/templates/about.html'
           }
         }
       })
-      .state('main.company', {
-        url: '/company',
+      .state('main.imprint', {
+        url: '/imprint',
         views: {
-          'tab-company': {
-            templateUrl: 'main/templates/company.html'
+          'tab-imprint': {
+            templateUrl: 'main/templates/imprint.html'
           }
         }
       });

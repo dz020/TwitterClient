@@ -5,7 +5,10 @@
     "angular-animate": "~1.5.0",
     "angular-sanitize": "~1.5.0",
     "angular-ui-router": "~0.3.1",
-    "ngCordova": "~0.1.17-alpha"
+    "ngCordova": "~0.1.17-alpha",
+    "angular-translate": "^2.13.0",
+    "angular-translate-loader-static-files": "^2.13.0",
+    "angular-encode-uri": "^1.0.0"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.0"
