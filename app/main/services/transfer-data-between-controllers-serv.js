@@ -7,6 +7,7 @@ angular.module('main')
     this.isOffline = 'nix';
     var that = this;
     this.networkStatus = '';
+    this.token = '';
 
     this.getData = function () {
       $log.log('get data service was callled');
@@ -25,6 +26,15 @@ angular.module('main')
       } else {
         $log.log('trigger popup');
       }
+    };
+
+    this.setToken = function (token) {
+      $log.log('tokeeen', token);
+      that.token = token;
+    };
+
+    this.getToken = function () {
+      return that.token;
     };
 
   });

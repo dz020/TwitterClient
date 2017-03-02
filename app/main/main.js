@@ -3,11 +3,12 @@ angular.module('main', [
   'ionic',
   'ngCordova',
   'ui.router',
-  'rt.encodeuri'
+  'rt.encodeuri',
+  'ngOpenFB'
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
 
-  $urlRouterProvider.otherwise('/main/list');
+  $urlRouterProvider.otherwise('/main/login');
   $stateProvider
     .state('main', {
       url: '/main',
@@ -36,7 +37,8 @@ angular.module('main', [
         url: '/about',
         views: {
           'tab-about': {
-            templateUrl: 'main/templates/about.html'
+            templateUrl: 'main/templates/about.html',
+            controller: 'AboutViewController as aboutViewCtrl'
           }
         }
       })
@@ -45,6 +47,15 @@ angular.module('main', [
         views: {
           'tab-imprint': {
             templateUrl: 'main/templates/imprint.html'
+          }
+        }
+      })
+      .state('main.login', {
+        url: '/login',
+        views: {
+          'tab-about': {
+            templateUrl: 'main/templates/login.html',
+            controller: 'LoginViewController as loginViewCtrl'
           }
         }
       });

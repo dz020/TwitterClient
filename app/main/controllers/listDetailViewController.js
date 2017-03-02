@@ -10,14 +10,16 @@ angular.module('main')
   this.hasLink = false;
 
   this.prepareDataForDisplay = function () {
-    if (that.data.retweet_count > 0 ) {
+    this.data = TransferDataBetweenControllers.getData();
+    $log.log('dateeen', this.data);
+/*    if (that.data.retweet_count > 0 ) {
       that.data.text = that.data.retweeted_status.text;
     }
     if (that.data.text.indexOf('http://') !== -1 || that.data.text.indexOf('https://') !== -1) {
       $log.log('link gefunden');
       that.data.link = that.urlify(that.data.text);
       that.hasLink = true;
-    }
+    }*/
   };
 
   this.urlify = function (text) {
@@ -37,7 +39,7 @@ angular.module('main')
         iconColor: ' #ffff00',
         backgroundColor: '#f00000',
         isPDF: false,
-        url: that.url,
+        url: 'https://www.facebook.com/events/' + that.data.id,
         urlEncoding: false,
         visibleAddress: false,
         editableAddress: false,
@@ -49,7 +51,7 @@ angular.module('main')
         }
       });
     } else {
-      window.open(that.url, '_blank');
+      window.open('https://www.facebook.com/events/' + that.data.id, '_blank');
     }
   };
 

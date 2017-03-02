@@ -8,24 +8,24 @@
         {{'LISTDETAILVIEW.AUTHOR' | translate}}
       </ion-item>
       <ion-item class="item">
-        {{ listDetailViewCtrl.data.user.name }}
+        {{ listDetailViewCtrl.data.name }} dsfsd
       </ion-item>
 
       <ion-item class="item item-divider">
         {{'LISTDETAILVIEW.CREATEDDATE' | translate}}
       </ion-item>
       <ion-item class="item">
-        {{ listDetailViewCtrl.data.created_at | date : "medium" }}
+        {{ listDetailViewCtrl.data.start_time | date : "EEEE, d.MMMM, y" }}
       </ion-item>
 
       <ion-item class="item item-divider">
         {{'LISTDETAILVIEW.TWEETHEADLINE' | translate}}
       </ion-item>
       <ion-item class="nothing-hidden item">
-        {{ listDetailViewCtrl.data.text }}
+        {{ listDetailViewCtrl }}
       </ion-item>
 
-      <button class="btn-open-in-browser button button-stable" ng-show="listDetailViewCtrl.hasLink" ng-click="listDetailViewCtrl.openLink()">
+      <button class="btn-open-in-browser button button-stable" ng-click="listDetailViewCtrl.openLink()">
         {{'LISTDETAILVIEW.OPENLINKBTN' | translate}}
       </button>
 

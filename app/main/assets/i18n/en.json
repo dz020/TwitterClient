@@ -1,22 +1,25 @@
 {
   "TABS": {
-    "TWEETS": "Tweets",
+    "TWEETS": "Events",
     "ABOUT": "About",
     "IMPRINT": "Imprint"
   },
   "LISTVIEW": {
-    "TITLE": "Tweets",
-    "WRITES": "writes:"
+    "TITLE": "EVENTS",
+    "WRITES": "Event:",
+    "DATE": "Wann?",
+    "PLACE": "Wo?",
+    "DESCRIPTION": "Um was gehts?"
   },
   "GENERAL": {
     "SORTBY": "Sort by",
-    "AUTHOR": "Author",
+    "AUTHOR": "Name",
     "DATE": "Date",
     "SEARCH": "Search",
     "FILTER": "Filter"
   },
   "LISTDETAILVIEW": {
-    "TITLE": "Tweet Details",
+    "TITLE": "Event Details",
     "OPENLINKBTN": "Open Link",
     "AUTHOR": "Author",
     "CREATEDDATE": "Created at",
@@ -29,5 +32,8 @@
   },
   "IMPRINTVIEW": {
     "TITLE": "Imprint"
+  },
+  "LOGINVIEW": {
+    "TITLE": "Login"
   }
 }

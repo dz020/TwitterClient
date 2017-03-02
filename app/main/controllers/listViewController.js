@@ -9,72 +9,49 @@ angular.module('main') //eine App == ein Module
   this.displayType = 'list-gallery';
   this.isGallery = false;
   this.isList = true;
+  this.keywords = 'Party';
   var that = this;
   this.searchTerm = Config.ENV.DEFAULT_SEARCHTERM;
+  this.token = '';
 
-  $log.log('is offline ???', TransferDataBetweenControllers.isOffline);
-
-  this.getToken = function () {
-
-    var tokenCredentials = $window.btoa(consumerKey + ':' + consumerSecret);
-    $log.log('tokenCredentials', tokenCredentials);
-
-    $log.log('that', that);
-    return $http({
-      method: 'POST',
-      url: Config.ENV.API_BASE_URL + Config.ENV.AUTH_TYPE_FOR_URL,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-        'Authorization': 'Basic ' + tokenCredentials
-      },
-      data: 'grant_type=client_credentials'
-    })
-    .then(function (result) {
-      if (result.data && result.data.access_token) {
-        $http.defaults.headers.common.Authorization = 'Bearer ' + result.data.access_token;
-      }
-    })
-    .catch(function (error) {
-      $log.log('error', error);
-    });
-  };
+  //$log.log('is offline ???', TransferDataBetweenControllers.isOffline);
 
   this.getTweets = function (searchTerm) {
     that.showLoading();
 
     if (searchTerm === '' || searchTerm === undefined) {
-      searchTerm = Config.ENV.DEFAULT_SEARCHTERM;
+      that.searchTerm = Config.ENV.DEFAULT_SEARCHTERM;
     } else {
       that.searchTerm = searchTerm;
       $log.log('SEARCHTERM:', that.searchTerm);
       $ionicScrollDelegate.scrollTop();
     }
 
-    return that.getToken().then(function () {
-      return $http({
-        method: 'GET',
-        url: Config.ENV.API_BASE_URL + Config.ENV.API_SEARCH_URL,
-        params: {
-          q: searchTerm
-        }
-      })
-      .then(function (result) {
-        that.tweets = result.data.statuses;
-        that.formateDate(result.data.statuses);
-        that.loadMoreTweetsUrl = Config.ENV.API_BASE_URL + Config.ENV.API_SEARCH_URL + result.data.search_metadata.next_results;
-        that.refreshTweetsUrl = Config.ENV.API_BASE_URL + Config.ENV.API_SEARCH_URL + result.data.search_metadata.refresh_url;
-      })
-      .finally(function () {
-        that.hideLoading();
-      })
-      .catch(function (error) {
-        $log.log(error);
-      });
+    return $http({
+      method: 'GET',
+//      url: Config.ENV.API_BASE_URL + '&query=' + that.searchTerm + Config.ENV.API_SEARCH_URL,
+      url: Config.ENV.API_BASE_URL + '?lat=49.398750&lng=8.672434&distance=1000' + '&eventQuery=' + that.searchTerm,
+    }).then(function (result) {
+      for (var i = 0; i < result.data.length; i++) {
+        that.tweets.concat(result.data[i]);
+      }
+      $log.log('tweets::', that.tweets);
+//      $log.log(result.data);
+//      that.tweets = result.data;
+//        that.formateDate(result.data.statuses);
+//        that.loadMoreTweetsUrl = Config.ENV.API_BASE_URL + Config.ENV.API_SEARCH_URL + result.data.search_metadata.next_results;
+//      that.refreshTweetsUrl = Config.ENV.API_BASE_URL + Config.ENV.API_SEARCH_URL + result.data.search_metadata.refresh_url;
+    })
+    .finally(function () {
+      that.hideLoading();
+    })
+    .catch(function (error) {
+      $log.log(error);
     });
   };
 
   this.loadMoreResults = function () {
-    $log.log('scroll to moad more');
+/*    $log.log('scroll to moad more');
     that.showLoading();
     return $http({
       method: 'GET',
@@ -94,10 +71,11 @@ angular.module('main') //eine App == ein Module
     .catch(function (error) {
       $log.log(error);
     });
+    */
   };
 
   this.doRefresh = function () {
-    that.showLoading();
+/*    that.showLoading();
     return $http({
       method: 'GET',
       url: that.refreshTweetsUrl,
@@ -114,17 +92,17 @@ angular.module('main') //eine App == ein Module
     })
     .catch(function (error) {
       $log.log(error);
-    });
+    });*/
   };
 
   this.hasMoreResults = function () {
-    if (that.loadMoreTweetsUrl !== '') {
+/*    if (that.loadMoreTweetsUrl !== '') {
       $log.log('more results available');
       return true;
     } else {
       $log.log('no more results available');
       return false;
-    }
+    }*/
   };
 
   this.showLoading = function () {
@@ -148,6 +126,34 @@ angular.module('main') //eine App == ein Module
       that.tweets[i].created_at = new Date(data[i].created_at).getTime();
     }
   };
+
+  this.sendKeywords = function () {
+    that.showLoading();
+    $log.log('keywords::', that.keywords);
+    that.token = TransferDataBetweenControllers.getToken();
+    return $http({
+      method: 'GET',
+//      url: Config.ENV.API_BASE_URL + '&query=' + that.searchTerm + Config.ENV.API_SEARCH_URL,
+      url: Config.ENV.API_BASE_URL + '?lat=49.398750&lng=8.672434&distance=10000' + '&eventQuery=' + that.keywords + '&accessToken=' + that.token,
+//      url: Config.ENV.API_BASE_URL + '?searchTerm=' + that.keywords,
+    }).then(function (result) {
+
+      that.tweets = result.data.events;
+
+      //$log.log(result.data);
+      //that.tweets = result.data;
+//        that.formateDate(result.data.statuses);
+//        that.loadMoreTweetsUrl = Config.ENV.API_BASE_URL + Config.ENV.API_SEARCH_URL + result.data.search_metadata.next_results;
+//      that.refreshTweetsUrl = Config.ENV.API_BASE_URL + Config.ENV.API_SEARCH_URL + result.data.search_metadata.refresh_url;
+    })
+    .finally(function () {
+      that.hideLoading();
+    })
+    .catch(function (error) {
+      $log.log(error);
+    });
+  };
+
 
 //--------------------------------------------------------------
 

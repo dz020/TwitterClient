@@ -14,10 +14,15 @@
       </label>
     </div>
 
+    <div class="keywordbar">
+      <textarea ng-model="listViewCtrl.keywords"></textarea>
+      <button class="button button-stable" ng-click="listViewCtrl.sendKeywords()">GO</button>
+    </div>
+
     <div class="sortbar bar">
       <span>{{'GENERAL.SORTBY' | translate }}</span>
-      <button class="button button-stable" ng-click="choice = 'user.name'" ng-class="{active : choice == 'user.name'}">{{'GENERAL.AUTHOR' | translate }}</button>
-      <button class="button button-stable" ng-click="choice = 'user.created_at'" ng-class="{active : choice == 'user.created_at'}">{{'GENERAL.DATE' | translate }}</button>
+      <button class="button button-stable" ng-click="choice = 'name'" ng-class="{active : choice == 'name'}">{{'GENERAL.AUTHOR' | translate }}</button>
+      <button class="button button-stable" ng-click="choice = 'startTime'" ng-class="{active : choice == 'startTime'}">{{'GENERAL.DATE' | translate }}</button>
       <button class="button button-stable" ng-click="listViewCtrl.isGallery = false; listViewCtrl.isList = true" ng-class="{active : listViewCtrl.isList == true}">
         <i class="icon ion-ios-list icon-accessory"></i>
       </button>
@@ -43,14 +48,18 @@
               ui-sref="main.listDetail">
 
       <div class="tweet-content-preview">
+        <img src="{{ tweet.coverPicture }}" width="" height="" alt="" />
         <div class="tweet-author">
-          {{ tweet.user.name }} {{'LISTVIEW.WRITES' | translate }}
+          {{ tweet.name }} 
         </div>
         <div class="tweet-date">
-          {{ tweet.created_at | date : "short" }}
+          {{'LISTVIEW.DATE' | translate }} {{ tweet.startTime | date : "EEEE, d.MMMM, y" }}
+        </div>
+        <div class="tweet-date">
+          {{'LISTVIEW.PLACE' | translate }} {{ tweet.venue.name }}
         </div>
         <div class="tweet-text-preview">
-          {{ tweet.text }}
+          {{'LISTVIEW.DESCRIPTION' | translate }} <br><br> {{ tweet.description }}
         </div>
       </div>
       <i class="detail-btn icon ion-chevron-right icon-accessory"></i>
