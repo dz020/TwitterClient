@@ -3,8 +3,6 @@ angular.module('main') //eine App == ein Module
 
 .controller('ListViewController', function ($scope, $http, $window, $ionicLoading, TransferDataBetweenControllers, $log, $ionicScrollDelegate, Config) {
 
-  var consumerKey = encodeURIComponent(Config.ENV.CONSUMER_KEY);
-  var consumerSecret = encodeURIComponent(Config.ENV.CONSUMER_SECRET);
   this.tweets = '';
   this.displayType = 'list-gallery';
   this.isGallery = false;
@@ -13,6 +11,10 @@ angular.module('main') //eine App == ein Module
   var that = this;
   this.searchTerm = Config.ENV.DEFAULT_SEARCHTERM;
   this.token = '';
+  this.eventsArray = [];
+  this.currentDate = '';
+  this.viewTitle = '';
+  this.calendarMode = '';
 
   //$log.log('is offline ???', TransferDataBetweenControllers.isOffline);
 
@@ -134,11 +136,23 @@ angular.module('main') //eine App == ein Module
     return $http({
       method: 'GET',
 //      url: Config.ENV.API_BASE_URL + '&query=' + that.searchTerm + Config.ENV.API_SEARCH_URL,
-      url: Config.ENV.API_BASE_URL + '?lat=49.398750&lng=8.672434&distance=10000' + '&eventQuery=' + that.keywords + '&accessToken=' + that.token,
-//      url: Config.ENV.API_BASE_URL + '?searchTerm=' + that.keywords,
+//      url: Config.ENV.API_BASE_URL + '?lat=49.398750&lng=8.672434&distance=10000' + '&eventQuery=' + that.keywords + '&accessToken=' + that.token,
+      url: Config.ENV.API_BASE_URL + '?lat=49.32596&lng=8.68614&distance=20000' + '&accessToken=' + that.token
     }).then(function (result) {
 
       that.tweets = result.data.events;
+
+      for (var i = 0; i < result.data.events.length; i++) {
+        var start = new Date(result.data.events[i].startTime);
+        var end = new Date(result.data.events[i].endTime);
+        var name = result.data.events[i].name;
+        that.eventsArray.push({
+          title: name,
+          startTime: start,
+          endTime: end,
+          allDay: false
+        });
+      }
 
       //$log.log(result.data);
       //that.tweets = result.data;
@@ -154,6 +168,37 @@ angular.module('main') //eine App == ein Module
     });
   };
 
+  this.showCalendar = function () {
+    $log.log('zeig mir den kalender');
+  };
+
+  this.onEventSelected = function (event) {
+    $log.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
+  };
+
+  this.onViewTitleChanged = function (title) {
+    that.viewTitle = title;
+  };
+
+  this.today = function () {
+    that.currentDate = new Date();
+  };
+
+  this.isToday = function () {
+    var today = new Date(),
+    currentCalendarDate = new Date(that.currentDate);
+    today.setHours(0, 0, 0, 0);
+    currentCalendarDate.setHours(0, 0, 0, 0);
+    return today.getTime() === currentCalendarDate.getTime();
+  };
+
+  this.onTimeSelected = function (selectedTime, events, disabled) {
+    $log.log('Selected time: ' + selectedTime + ', hasEvents: ' + (events !== undefined && events.length !== 0) + ', disabled: ' + disabled);
+  };
+
+  this.changeMode = function (mode) {
+    that.calendarMode = mode;
+  };
 
 //--------------------------------------------------------------
 

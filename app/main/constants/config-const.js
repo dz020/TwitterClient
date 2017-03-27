@@ -10,7 +10,7 @@ angular.module('main')
     'API_SEARCH_URL': '',
     'CONSUMER_KEY': 'JLecUmd1bXGJbQHhP3W9UD9uN',
     'CONSUMER_SECRET': 'ckJUEow7KwpOjv6rQ5wajVcIFq7YI2uTjfr5s138lB091vAfWN',
-    'DEFAULT_SEARCHTERM': 'heidelberg',
+    'DEFAULT_SEARCHTERM': '',
     'AUTH_TYPE_FOR_URL': 'oauth2/token'
     /*endinject*/
   },

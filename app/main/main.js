@@ -4,7 +4,8 @@ angular.module('main', [
   'ngCordova',
   'ui.router',
   'rt.encodeuri',
-  'ngOpenFB'
+  'ngOpenFB',
+  'ui.rCalendar'
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -46,7 +47,8 @@ angular.module('main', [
         url: '/imprint',
         views: {
           'tab-imprint': {
-            templateUrl: 'main/templates/imprint.html'
+            templateUrl: 'main/templates/imprint.html',
+            controller: 'ImprintViewController as imprintViewCtrl'
           }
         }
       })
@@ -58,5 +60,5 @@ angular.module('main', [
             controller: 'LoginViewController as loginViewCtrl'
           }
         }
-      });
+      }); 
 });

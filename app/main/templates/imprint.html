@@ -2,8 +2,42 @@
 
   <ion-content class="padding">
 
-    <iframe src="https://www.mwaysolutions.com/" width="100%" height="100%">
-    </iframe>
+  <div class="card">
+    <div class="item item-divider">
+      Dein Event Tracker
+    </div>
+    <div class="item item-text-wrap">
+        Liege hier eine Liste an Orten an, die du nach Events überwachsen möchtest! Los gehts!
+    </div>
+    <div class="item item-divider">
+        <button class="button button-stable card-button">Neuen Ort hinzufügen</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="item item-divider">
+      Füge einen neuen Ort hinzu
+    </div>
+    <div class="item item-text-wrap">
+
+      <label class="item item-input">
+        <input type="text" placeholder="Wo?">
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="Umkreis?">
+      </label>
+
+      <label class="item item-input">
+
+        <textarea placeholder="Was?"></textarea>
+      </label>
+
+    </div>
+    <div class="item item-divider">
+      <button class="button button-stable card-button" ng-click="imprintViewController.saveLookup()">Speichern</button>
+      <button class="button button-stable card-button">Löschen</button>
+    </div>
+  </div>
 
   </ion-content>
 </ion-view>

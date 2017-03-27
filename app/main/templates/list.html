@@ -29,11 +29,32 @@
       <button class="button button-stable sort-btn" ng-click="listViewCtrl.isGallery = true; listViewCtrl.isList = false" ng-class="{active : listViewCtrl.isGallery == true}">
         <i class="icon ion-ios-keypad icon-accessory"></i>
       </button>
+      <button class="button button-stable" ng-click="listViewCtrl.showCalendar()">
+        cal
+      </button>
     </div>
 
 </ion-header-bar>
 
-  <ion-content>
+  <ion-content class="calendar-filter" style="display:none">
+    <ion-nav-buttons side="right">
+      <button class="button" ng-disabled="listViewCtrl.isToday()" ng-click="listViewCtrl.today()">Today</button>
+      <button class="button" ng-click="listViewCtrl.changeMode('month')">M</button>
+      <button class="button" ng-click="listViewCtrl.changeMode('week')">W</button>
+      <button class="button" ng-click="listViewCtrl.changeMode('day')">D</button>
+      <button class="button" ng-click="listViewCtrl.loadEvents()">Load Events</button>
+    </ion-nav-buttons>
+  </ion-content>
+
+  <ion-content scroll="false" class="main-content calendar-view" style="display:none">
+    <calendar ng-model="listViewCtrl.currentDate" calendar-mode="listViewCtrl.calendarMode" event-source="listViewCtrl.eventsArray" 
+        range-changed="listViewCtrl.reloadSource(startTime, endTime)"
+        event-selected="listViewCtrl.onEventSelected(event)" title-changed="onViewTitleChanged(title)"
+        time-selected="listViewCtrl.onTimeSelected(selectedTime, events, disabled)" step="30">
+      </calendar>
+  </ion-content>
+
+  <ion-content class="list-view">
 
   <ion-refresher
     pulling-text="Pull to refresh..."
